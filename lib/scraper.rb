@@ -13,17 +13,14 @@ class Scraper
   end
 
   def scrape
-  @db  = SQLite3::Database.new ":memory:"
-  @db.execute("CREATE TABLE pokemon (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, type TEXT)")
-  preparedDB = db.prepare("INSERT INTO pokemon (name, type) VALUES (?, ?)")
+  # preparedDB = db.prepare("INSERT INTO pokemon (name, type) VALUES (?, ?)")
   html = File.read("pokemon_index.html")
   pokemon_scrap = Nokogiri::HTML(html)
     pokemon_scrap.css("span.infocard-tall").each do |pokemon|
-      pkName = pokemon.css("a.ent-name").text
-      pkType = pokemon.css("a.itype").text
-      @newPokemonInstance.save(pkName, pkType, preparedDB)
+      pkName = pokemon.css("a.ent-name").text.to_s
+      pkType = pokemon.css("a.itype").text.to_s
+      newPokemonInstance.save(pkName, pkType, db)
     end
-     preparedDB.close
   end
 
 end
