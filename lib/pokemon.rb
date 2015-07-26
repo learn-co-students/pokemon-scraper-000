@@ -1,7 +1,13 @@
 class Pokemon
+  attr_accessor :db
+
+  def initialize(db = nil)
+    @db = db
+  end
 
   def save(pkname, pktype, db)
-  db.execute "INSERT INTO pokemon (name, type) VALUES (pkname, pktype)"
+  preparedDB = db.prepare("INSERT INTO pokemon (name, type) VALUES (?, ?)")
+  preparedDB.execute(pkname, pktype)
   end
 
 end

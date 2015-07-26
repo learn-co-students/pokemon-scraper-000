@@ -12,7 +12,7 @@ describe "Pokemon" do
   describe "has caught all 151 from scraping" do
     it "has all 151 pokemon" do
         sql = <<-SQL
-    SELECT * FROM pokemon;
+    SELECT COUNT(*) FROM pokemon;
     SQL
 
       expect(@db.execute(sql).flatten.first).to eq(151)
@@ -20,7 +20,7 @@ describe "Pokemon" do
 
     it "knows all the information about Horsea" do
         sql = <<-SQL
-    SELECT name FROM pokemon WHERE name = "Horsea";
+    SELECT * FROM pokemon WHERE name = "Horsea";
     SQL
       expect(@db.execute(sql).flatten).to eq([116, "Horsea", "Water"])
     end
@@ -49,14 +49,22 @@ describe "Pokemon" do
 
   describe "saving more pokemon to the database" do
     before do
-      Pokemon.save("Togepi", "Fairy", @db)
+      there = Pokemon.new
+      there.save("Togepi", "Fairy", @db)
     end
 
     it "knows the pokemon count increases" do
+      sql = <<-SQL
+    SELECT COUNT(*) FROM pokemon;
+    SQL
       expect(@db.execute(sql).flatten.first).to eq(152)
     end
 
     it "has Togepi as the last pokemon" do
+    sql = <<-SQL
+      SELECT name FROM pokemon ORDER BY id DESC LIMIT 1;
+    SQL
+
       expect(@db.execute(sql).flatten.first).to eq("Togepi")
     end
   end

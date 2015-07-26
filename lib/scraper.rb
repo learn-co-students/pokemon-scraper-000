@@ -9,17 +9,17 @@ class Scraper
 
   def initialize(db)
     @db = db
-    @newPokemonInstance = Pokemon.new
+    @newPokemonInstance = Pokemon.new(db)
   end
 
   def scrape
-  # preparedDB = db.prepare("INSERT INTO pokemon (name, type) VALUES (?, ?)")
   html = File.read("pokemon_index.html")
   pokemon_scrap = Nokogiri::HTML(html)
     pokemon_scrap.css("span.infocard-tall").each do |pokemon|
       pkName = pokemon.css("a.ent-name").text.to_s
       pkType = pokemon.css("a.itype").text.to_s
       newPokemonInstance.save(pkName, pkType, db)
+      # preparedDB.execute(pkName, pkType)
     end
   end
 
