@@ -97,5 +97,5 @@ describe "Pokemon" do
 
   #   # The pokemon battle has now been won, and you are the Pokemon and SQL Master!
 
-  end
+  # end
 end
