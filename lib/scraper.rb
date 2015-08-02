@@ -9,9 +9,10 @@ class Scraper
 	def scrape
 		html = File.read('./pokemon_index.html')
 		pokemons = Nokogiri::HTML(html)
-		pokemon_array = []
-		pokemons.css('span.infocard-tall a.ent-name').each do |pokemon|
-			pokemon_array<<pokemon.text
+		pokemons.css('span.infocard-tall').each do |pokemon|
+			pokemon_name = pokemon.css('a.ent-name').text
+			pokemon_type = pokemon.css('small.aside').text
+			Pokemon.save(pokemon_name, pokemon_type, @db)
 		end
 	end
 
