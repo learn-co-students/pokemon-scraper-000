@@ -29,20 +29,7 @@ class Pokemon
     Pokemon.new(id, name, type, hp, db)
   end
 
-  # def self.find(row_id, db)
-  #   pokemon_array = db.execute('SELECT * FROM pokemon_table WHERE id = ?', row_id)
-  #   id = pokemon_array[0][0]
-  #   name = pokemon_array[0][1]
-  #   type = name = pokemon_array[0][2]
-  #   hp = pokemon_array[0][3]
-  #   Pokemon.new(id, name, type, hp, db)
-  # end
 
-  # def self.alter_hp(hp)
-  #   binding.pry
-  #   @db.execute('UPDATE pokemon FROM pokemon SET hp = ? WHERE id = ?', hp, self.id)
-  #   binding.pry
-  # end
 
   def alter_hp(hp)
     @db.execute('UPDATE pokemon SET hp = ? WHERE id = ?', hp, self.id)
