@@ -40,18 +40,4 @@ class Pokemon
 
 	end
 
-  def update
-    sql = <<-SQL
-        UPDATE pokemons
-        SET name = ?, type = ?, hp = ?
-        WHERE id = ?;
-    SQL
-
-    self.db.execute(sql, self.name, self.type, self.hp, self.id)
-  end
-
-
-
-
-
 end
