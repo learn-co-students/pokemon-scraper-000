@@ -10,11 +10,7 @@ class Pokemon
 
 
 	def self.save(name, type, db)
-		command = 
-			<<-SQL
-				INSERT INTO pokemon (name, type) VALUES (?,?);
-			SQL
-		db.execute(command, name, type)
+		db.execute("INSERT INTO pokemon (name, type) VALUES (?,?);", name, type)
 	end
 
 	def self.find(id, db)
@@ -39,5 +35,12 @@ class Pokemon
 		end
 
 	end
+
+
+  	def alter_hp(new_hp, db)
+  		self.hp = new_hp
+ 		db.execute("UPDATE pokemon SET hp = ? WHERE id = ?;", new_hp, self.id)
+  end
+
 
 end
